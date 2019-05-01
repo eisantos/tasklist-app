@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url( 'https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons');
+
+body,
+html {
+    margin: 0;
+    height: 100% !important;
+}
+
+.fullscreen {
+    height: 100% !important;
+}
+
+.table-fullscreen {
+    width: 100%;
+  }
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.green-icon {
+    color: green;
+}
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+.green-icon svg {
+    fill:green;
+}

@@ -1,0 +1,39 @@
+<mat-card class="fullscreen">
+  <form [formGroup]="form" #formAtualizar="ngForm" (ngSubmit)="save($event, formAtualizar)" >
+    <div class="cadastro-container" >
+      <h2>Task {{task.id_task}}</h2>
+
+      <mat-form-field >
+        <input formControlName="titulo" matInput placeholder="Título" required/>
+      </mat-form-field>
+      <mat-form-field >
+        <textarea formControlName="descricao" matInput placeholder="Descrição" required></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="task_status" [id]="s" required (ngModelChange)="statusClick($event)">
+          <mat-option   *ngFor="let s of task_status"  [value]="s.sgl_status">
+            {{s.descricao}}
+          </mat-option>
+        </mat-select>
+        
+      </mat-form-field>
+      <p>
+        <button mat-raised-button (click)="gotoTaskList(task.id_task)">Voltar</button>
+        <button ngSubmit mat-raised-button color="primary">Salvar</button>
+      </p>
+    </div>
+  </form>
+      
+  <ng-template #cadastro>
+    <div class="cadastro-container">
+      
+      <mat-form-field>
+        <input matInput placeholder="Descrição">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Input">
+      </mat-form-field>
+    </div>
+  </ng-template>
+</mat-card>

@@ -1,0 +1,17 @@
+.cadastro-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 5%;
+ }
+ .cadastro-container > * {
+    width: 100%;
+ }
+
+.cadastro-container button, a{
+  margin-right: 8px;
+}
+
+.input_id{
+    display: none;
+}

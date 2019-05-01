@@ -1,0 +1,49 @@
+<!--
+  TODO: 
+  1 - Ordem das tasks e adicionar drag and drop
+      Referencia: https://github.com/angular/components/issues/13770
+
+  2 - Adicionar ações de conjunto. Ex:
+      Deletar várias tarefas, alterar o status de várias tarefas
+-->
+
+<mat-card class="fullscreen">
+  <div class="table-container mat-elevation-z8">
+    <table mat-table [dataSource]="tasks"  [class.isMobile]="isMobile">
+      <ng-container matColumnDef="id_task">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let tasks"> {{tasks.id_task}} </td>
+      </ng-container>
+      <ng-container matColumnDef="titulo">
+        <th mat-header-cell *matHeaderCellDef> Título </th>
+        <td mat-cell *matCellDef="let tasks"> {{tasks.titulo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="data_criacao">
+        <th mat-header-cell *matHeaderCellDef> Data de criação </th>
+        <td mat-cell *matCellDef="let tasks"> {{tasks.data_criacao}} </td>
+      </ng-container>
+      <ng-container matColumnDef="data_situacao">
+          <th mat-header-cell *matHeaderCellDef> Últ. atualização </th>
+          <td mat-cell *matCellDef="let tasks"> {{tasks.data_situacao}} </td>
+        </ng-container>
+      <ng-container matColumnDef="status" cdkColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let tasks">
+          <mat-select [(ngModel)]="tasks.task_status.sgl_status" (ngModelChange)="statusClick(tasks)">
+            <mat-option *ngFor="let s of task_status"  [value]="s.sgl_status">
+                {{s.descricao}}
+            </mat-option>
+          </mat-select></td>
+      </ng-container>
+      <ng-container matColumnDef="editar">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let tasks">
+          <a matTooltip="Editar Task" mat-icon-button color="primary" [routerLink]="['/tasks/cadastro', tasks.id_task]"><mat-icon>edit</mat-icon></a>
+          <button matTooltip="Excluir Task" mat-icon-button color="warn" (click)="delete(tasks.id_task)"><mat-icon>delete</mat-icon></button>
+          </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (cdkDropListDropped)="drop($event)"> </tr>
+    </table>
+  </div>
+</mat-card>
