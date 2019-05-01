@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Status } from '../../../models/status';
 import { StatusService } from 'src/app/services/status.service';
+import { ErrorHandlerComponent } from '../../error-handler/error-handler.component';
 
 @Component({
   selector: 'app-task-detalhes',
@@ -27,7 +28,8 @@ export class TaskDetalhesComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private errorHandler: ErrorHandlerComponent) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -69,6 +71,9 @@ export class TaskDetalhesComponent implements OnInit {
       this.form.controls['titulo'].setValue(this.task.titulo)
       this.form.controls['descricao'].setValue(this.task.descricao)
       this.form.controls['task_status'].setValue(this.task.task_status.sgl_status)
+    },
+    (err) => {
+      this.errorHandler.trataErro(err, '');
     })
   }
 
@@ -97,6 +102,9 @@ export class TaskDetalhesComponent implements OnInit {
         this.task = dados;
         this.openSnackBar("Salvo com sucesso!");
         this.gotoTaskList(this.selectedId)
+      },
+      (err) => {
+        this.errorHandler.trataErro(err, '');
       })
 
   }

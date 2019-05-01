@@ -11,7 +11,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Status</mat-label>
-        <mat-select formControlName="task_status" [id]="s" required (ngModelChange)="statusClick($event)">
+        <mat-select formControlName="task_status" [id]="s" required>
           <mat-option   *ngFor="let s of task_status"  [value]="s.sgl_status">
             {{s.descricao}}
           </mat-option>

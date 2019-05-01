@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { Task } from '../../../models/task';
 import { Status } from 'src/app/models/status';
 import { StatusService } from 'src/app/services/status.service';
+import { ErrorHandlerComponent } from '../../error-handler/error-handler.component';
 
 @Component({
   selector: 'app-task-listagem',
@@ -20,17 +21,24 @@ export class TaskListagemComponent implements OnInit {
   constructor(
     private taskService: TaskService,
     private statusService: StatusService,
+    private errorHandler: ErrorHandlerComponent,
     private snackBar: MatSnackBar) { }
 
   /** Carrega as Tasks e cria a lista de situações disponíveis */
   ngOnInit() {
     this.list();
-    this.statusService.list().subscribe(dados => this.task_status = dados);
+    this.statusService.list().subscribe(dados => {this.task_status = dados},
+      (err) => {
+        this.errorHandler.trataErro(err, 'Houve um erro ao carregar os Status. Entre em contato com o Suporte técnico.');
+      });
   }
 
   /** Carrega as Tasks */
   list(){
-    this.taskService.list().subscribe(dados => this.tasks = dados)
+    this.taskService.list().subscribe(dados => {this.tasks = dados},
+      (err) => {
+        this.errorHandler.trataErro(err, 'Houve um erro ao abrir a lista de Tasks. Entre em contato com o Suporte técnico.');
+      })
   }
 
   /** Deleta uma Task */
@@ -38,6 +46,9 @@ export class TaskListagemComponent implements OnInit {
     this.taskService.delete(id_task).subscribe(dados => {
       this.openSnackBar('Task removida com sucesso!');
       this.list()
+    },
+    (err) => {
+      this.errorHandler.trataErro(err, '');
     })
   }
   
@@ -48,7 +59,10 @@ export class TaskListagemComponent implements OnInit {
     this.taskService.save(dado.id_task, dado).subscribe(dados => {
       dado = dados;
       this.openSnackBar("Salvo com sucesso!");
-    })
+    },
+    (err) => {
+      this.errorHandler.trataErro(err, '');
+    });
   }
 
   /**
@@ -56,7 +70,7 @@ export class TaskListagemComponent implements OnInit {
    *  Criar componente de mensagem */
   openSnackBar(message: string) {
     this.snackBar.open(message, '', {
-      duration: 2000,
+      duration: 3000,
     });
   }
 

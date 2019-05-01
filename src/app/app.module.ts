@@ -20,6 +20,7 @@ import { TaskService } from './services/task.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { StatusService } from './services/status.service';
+import { ErrorHandlerComponent } from './components/error-handler/error-handler.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { StatusService } from './services/status.service';
     AppComponent,
     TaskListagemComponent,
     NavbarComponent,
-    TaskDetalhesComponent
+    TaskDetalhesComponent,
+    ErrorHandlerComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { StatusService } from './services/status.service';
   ],
   providers: [ 
     TaskService, 
-    StatusService
+    StatusService,
+    ErrorHandlerComponent
   ],
   bootstrap: [AppComponent]
 })
